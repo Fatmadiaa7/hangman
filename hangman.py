@@ -148,8 +148,7 @@ def hangman_with_hints(secret_word):
                     num_guesses -= 1
                 print("Oops! That let                                                                                                     ter is not in my word:", guessed_word)
         elif guessed_letter == '*':
-            # give hints
-            print('hello')
+            show_possible_matches(guessed_word)   
         else:
             if num_warning == 0:
                 num_guesses -= 1
@@ -248,7 +247,7 @@ wordlist = load_words()
 if __name__ == "__main__":
     secret_word = choose_word(wordlist)
 #uncomment the next line after implementing the function
-secret_word = "apple"
-hangman(secret_word)
+
+#hangman(secret_word)
 hangman_with_hints(secret_word)
 
