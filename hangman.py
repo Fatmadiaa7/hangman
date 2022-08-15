@@ -232,14 +232,23 @@ def match_with_gaps(guessed_word, other_word):
     return True
 
 
-def show_possible_matches(my_word):
-    pass
+def show_possible_matches(guessed_word):
+    list = ""
+    for word in wordlist:
+        if match_with_gaps(guessed_word, word):
+            list += word + " "
+    print(list)
+
+
+        
+
 
 
 wordlist = load_words()
 if __name__ == "__main__":
     secret_word = choose_word(wordlist)
-# uncomment the next line after implementing the function
-#secret_word = "apple"
+#uncomment the next line after implementing the function
+secret_word = "apple"
 hangman(secret_word)
-# hangman_with_hints(secret_word)
+hangman_with_hints(secret_word)
+
