@@ -3,6 +3,7 @@ import string
 
 WORDLIST_FILENAME = "words.txt"
 
+
 def load_words():
     """
     Returns a list of valid words. Words are strings of lowercase letters.
@@ -19,12 +20,14 @@ def load_words():
     print("", len(wordlist), " words loaded.")
     return wordlist
 
+
 def choose_word(wordlist):
     """
     wordlist (list): list of words (strings)
     Returns a word from wordlist at random
     """
     return random.choice(wordlist)
+
 
 def hangman(secret_word):
     '''
@@ -46,7 +49,7 @@ def hangman(secret_word):
     name = input("What's your name?   ")
     num_letters = len(secret_word)
     num_warning = 3
-    num_guesses = 6 # TODO: Change it to a global variable 
+    num_guesses = 6  # TODO: Change it to a global variable
     letters_guessed = []
     print("Welcome,", name + ", " + "to the game Hangman!")
     print("I am thinking of a word that is", num_letters, "letters long.")
@@ -65,11 +68,13 @@ def hangman(secret_word):
                 if num_warning == 0:
                     num_guesses -= 1
                     num_warning += 3
-                    print("you have no warnings left so we have subtracted from your guesses and refilled your warnings now you have", num_guesses,"guesses and", num_warning,"warnings")
+                    print("you have no warnings left so we have subtracted from your guesses and refilled your warnings now you have",
+                          num_guesses, "guesses and", num_warning, "warnings")
                     print(guessed_word)
                 else:
                     num_warning -= 1
-                    print("Oops! You've already guessed that letter. You now have", num_warning, "warnings:", guessed_word)
+                    print("Oops! You've already guessed that letter. You now have",
+                          num_warning, "warnings:", guessed_word)
                     continue
             letters_guessed.append(guessed_letter)
             if guessed_letter in secret_word:
@@ -84,12 +89,14 @@ def hangman(secret_word):
         else:
             if num_warning == 0:
                 num_guesses -= 1
-                num_warning +=3 
-                print("you have no warnings left so we have subtracted from your guesses and refilled your warnings now you have", num_guesses,"guesses and", num_warning,"warnings")
+                num_warning += 3
+                print("you have no warnings left so we have subtracted from your guesses and refilled your warnings now you have",
+                      num_guesses, "guesses and", num_warning, "warnings")
             else:
                 num_warning -= 1
-                print("Oops! That is not a valid letter." "You have", num_warning, "warnings left:", guessed_word)
-        
+                print("Oops! That is not a valid letter." "You have",
+                      num_warning, "warnings left:", guessed_word)
+
     if is_word_guessed(secret_word, letters_guessed):
         print(" Congratulations, you won!")
         num_unique_letters = unique_letter(secret_word)
@@ -106,6 +113,7 @@ def is_word_guessed(secret_word, letters_guessed):
             return False
     return True
 
+
 def get_guessed_word(secret_word, letters_guessed):
     word = ""
     for letter in secret_word:
@@ -113,13 +121,15 @@ def get_guessed_word(secret_word, letters_guessed):
             word += letter
         else:
             word += "_ "
-    return word 
+    return word
+
 
 def get_available_letters(letters_guessed):
     available_letters = string.ascii_lowercase
     for letter in letters_guessed:
         available_letters = available_letters.replace(letter, "")
     return available_letters
+
 
 def isvowel(letter):
     vowels = "auieo"
@@ -128,25 +138,44 @@ def isvowel(letter):
     else:
         return False
 
+
 def unique_letter(word):
     str = ""
     num = 0
     for letter in word:
         if letter not in str:
             str += letter
-            num +=1 
+            num += 1
     return num
 
 # def unique_letter_2(word):
 #     s = set(word)
 #     return len(s)
 
+
 def calc_score(num_guesses, num_unique_letters):
     return num_guesses * num_unique_letters * 100
-            
+
+
+def match_with_gaps(guessed_word, other_word):
+    guessed_word = guessed_word.replace(" ", "")
+    if len(guessed_word) == len(other_word):
+        for letter in guessed_word:
+            if letter == '_':
+                continue
+            else:
+                if letter == other_word[guessed_word.index(letter)]:
+                    continue
+                else:
+                    return False
+    else:
+        return False
+    return True
 
 
 
+def show_possible_matches(my_word):
+    pass
 
 
 wordlist = load_words()
@@ -155,3 +184,4 @@ if __name__ == "__main__":
 # uncomment the next line after implementing the function
 #secret_word = "apple"
 hangman(secret_word)
+# hangman_with_hints(secret_word)
